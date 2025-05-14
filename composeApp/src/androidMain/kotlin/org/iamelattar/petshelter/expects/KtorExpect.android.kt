@@ -10,8 +10,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 actual val client: HttpClient
-    get() = HttpClient(OkHttp){
-        install(HttpTimeout){
+    get() = HttpClient(OkHttp) {
+        install(HttpTimeout) {
             socketTimeoutMillis = 60_000
             requestTimeoutMillis = 60_000
         }
@@ -19,9 +19,9 @@ actual val client: HttpClient
             header("Content-Type", "application/json")
             url("https://pokeapi.co/api/v2/")
         }
-        install(ContentNegotiation){
+        install(ContentNegotiation) {
             json(
-                Json{
+                Json {
                     isLenient = true
                     ignoreUnknownKeys = true
                     explicitNulls = false
