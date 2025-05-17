@@ -1,9 +1,6 @@
 package org.iamelattar.petshelter.data.datasource
 
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.RedirectResponseException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import org.iamelattar.petshelter.data.api.WebService
@@ -19,17 +16,12 @@ class RemoteDS : WebService {
             }
             return ResultWrapper.Success(response.body())
 
-        } catch (e: RedirectResponseException) {
-            return (ResultWrapper.Error(e.response.status.description))
-
-        } catch (e: ClientRequestException) {
-            return (ResultWrapper.Error(e.response.status.description))
-        } catch (e: ServerResponseException) {
-            return (ResultWrapper.Error(e.response.status.description))
         } catch (e: Exception) {
-            return (ResultWrapper.Error(e.message ?: "Something went wrong"))
+            return (ResultWrapper.Error(e.message.toString()))
+
+        } finally {
+            client.close()
         }
     }
-
 
 }

@@ -12,8 +12,9 @@ import kotlinx.serialization.json.Json
 actual val client: HttpClient
     get() = HttpClient(OkHttp) {
         install(HttpTimeout) {
-            socketTimeoutMillis = 60_000
-            requestTimeoutMillis = 60_000
+            socketTimeoutMillis = 15_000
+            connectTimeoutMillis = 15_000
+            requestTimeoutMillis = 15_000
         }
         defaultRequest {
             header("Content-Type", "application/json")
